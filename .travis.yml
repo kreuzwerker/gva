@@ -1,0 +1,7 @@
+sudo: false
+language: go
+install:
+  - go get github.com/stretchr/testify/assert
+  - go get code.google.com/p/go.tools/cmd/cover
+script:
+  - go test -parallel 4 -cover
