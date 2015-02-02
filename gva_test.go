@@ -21,6 +21,20 @@ const (
 	WithoutSecret = false
 )
 
+var varnishd string
+
+func init() {
+
+	var err error
+
+	varnishd, err = exec.LookPath("varnishd")
+
+	if err != nil {
+		panic("Cannot find varnishd")
+	}
+
+}
+
 func run(argv ...string) (func() error, error) {
 
 	cmd := exec.Command(argv[0], argv[1:len(argv)]...)
@@ -56,7 +70,7 @@ func varnish(t *testing.T, port uint16, secret bool) func() error {
 	rand.Read(uuid)
 
 	args := []string{
-		"/usr/local/sbin/varnishd",
+		varnishd,
 		"-n",
 		hex.EncodeToString(uuid),
 		"-F",

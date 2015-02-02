@@ -1,4 +1,7 @@
-sudo: false
+before_install:
+  - sudo ./.install.sh
+cache:
+  - apt
 language: go
 install:
   - go get github.com/stretchr/testify/assert
